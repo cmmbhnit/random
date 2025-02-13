@@ -1,40 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Upload, RefreshCw, Settings } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function RandomNumbersApp() {
-  const [numbers, setNumbers] = useState(generateRandomNumbers());
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(100);
+  const [number, setNumber] = useState(generateRandomNumber(min, max));
+  const [digits, setDigits] = useState(padDigits(number, max));
   const [isRolling, setIsRolling] = useState(false);
   const [background, setBackground] = useState(null);
   const [videoBackground, setVideoBackground] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [explosions, setExplosions] = useState([]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-  function generateRandomNumbers() {
-    return Array.from({ length: 4 }, () => Math.floor(Math.random() * 10));
+  function padDigits(num, max) {
+    let maxLength = max.toString().length;
+    let digitsArray = num.toString().split("").map(Number);
+    while (digitsArray.length < maxLength) {
+      digitsArray.unshift(0);
+    }
+    return digitsArray;
   }
 
   function startRolling() {
     setIsRolling(true);
     let interval = setInterval(() => {
-      setNumbers(generateRandomNumbers());
+      const newNumber = generateRandomNumber(min, max);
+      setNumber(newNumber);
+      setDigits(padDigits(newNumber, max));
     }, 100);
 
     setTimeout(() => {
       clearInterval(interval);
-      setNumbers(generateRandomNumbers());
+      const finalNumber = generateRandomNumber(min, max);
+      setNumber(finalNumber);
+      setDigits(padDigits(finalNumber, max));
       setIsRolling(false);
+      triggerExplosion();
     }, 2000);
+  }
+
+  function triggerExplosion() {
+    let newExplosions = [];
+    for (let i = 0; i < 10; i++) {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      for (let j = 0; j < 15; j++) {
+        newExplosions.push({
+          id: `${i}-${j}`,
+          x,
+          y,
+          angle: Math.random() * 360,
+          color: ["black", "red", "yellow"][Math.floor(Math.random() * 3)],
+          delay: Math.random() * 0.5,
+        });
+      }
+    }
+    setExplosions(newExplosions);
+    setTimeout(() => setExplosions([]), 1500);
   }
 
   function handleFileChange(event, type) {
@@ -89,6 +116,28 @@ export default function RandomNumbersApp() {
         >
           Cài đặt
         </h2>
+        <div
+          style={{
+            position: "fixed",
+            top: "1rem",
+            left: "1rem",
+            display: "flex",
+            gap: "10px",
+          }}
+        >
+          <input
+            type="number"
+            value={min}
+            onChange={(e) => setMin(Number(e.target.value))}
+            placeholder="Min"
+          />
+          <input
+            type="number"
+            value={max}
+            onChange={(e) => setMax(Number(e.target.value))}
+            placeholder="Max"
+          />
+        </div>
 
         <button
           style={{
@@ -196,22 +245,38 @@ export default function RandomNumbersApp() {
           }}
         />
       )}
+      {explosions.map((explosion) => (
+        <motion.div
+          key={explosion.id}
+          initial={{ opacity: 1, x: explosion.x, y: explosion.y, scale: 0 }}
+          animate={{
+            opacity: 0,
+            x: explosion.x + Math.cos(explosion.angle) * 100,
+            y: explosion.y + Math.sin(explosion.angle) * 100,
+            scale: 1.5,
+          }}
+          transition={{ duration: 1, delay: explosion.delay }}
+          style={{
+            position: "absolute",
+            width: 8,
+            height: 8,
+            backgroundColor: explosion.color,
+            borderRadius: "50%",
+          }}
+        />
+      ))}
 
       <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "16px",
-          height: "100vh",
-        }}
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", gap: "16px" }}
       >
-        {numbers.map((num, index) => (
-          <div
+        {digits.map((digit, index) => (
+          <motion.div
             key={index}
+            animate={{ scale: isRolling ? 1.2 : 1 }}
+            transition={{ duration: 0.2 }}
             style={{
               fontFamily: "fantasy",
-              backgroundColor: "transparent",
+              backgroundColor: "white",
               width: 80,
               height: 80,
               display: "flex",
@@ -221,15 +286,14 @@ export default function RandomNumbersApp() {
               boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
               fontSize: 20,
               fontWeight: "bold",
-              transform: isRolling ? "scale(1.2)" : "scale(1)",
               margin: 35,
-              // opacity: "0.5",
             }}
           >
-            {num}
-          </div>
+            {digit}
+          </motion.div>
         ))}
       </div>
+
 
       <button
         style={{
@@ -249,21 +313,33 @@ export default function RandomNumbersApp() {
 
       <button
         style={{
-          position: "fixed",
-          bottom: "1.5rem",
-          left: "1.5rem",
-          padding: "16px",
-          backgroundColor: "#1d4ed8",
+          position: "absolute", // Use absolute positioning
+          top: "60%", // Center vertically
+          left: "50%", // Center horizontally
+          transform: "translate(-50%, -50%)", // Offset by half its width and height
+          padding: "16px 24px",
+          backgroundColor: "#FF0000",
           color: "white",
-          borderRadius: "999px",
+          borderRadius: "10px",
           cursor: isRolling ? "not-allowed" : "pointer",
           opacity: isRolling ? 0.7 : 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px",
+          fontWeight: "bold",
+          fontSize: "1rem",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
         }}
         onClick={startRolling}
         disabled={isRolling}
       >
         <RefreshCw size={20} /> {isRolling ? "Đang quay..." : "Random số"}
       </button>
+
+
+
+
     </div>
   );
 }
