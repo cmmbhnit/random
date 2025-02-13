@@ -21,7 +21,7 @@ export default function RandomNumbersApp() {
   }, []);
 
   function generateRandomNumbers() {
-    return Array.from({ length: 4 }, () => Math.floor(Math.random() * 100));
+    return Array.from({ length: 4 }, () => Math.floor(Math.random() * 10));
   }
 
   function startRolling() {
@@ -210,7 +210,8 @@ export default function RandomNumbersApp() {
           <div
             key={index}
             style={{
-              backgroundColor: "white",
+              fontFamily: "fantasy",
+              backgroundColor: "transparent",
               width: 80,
               height: 80,
               display: "flex",
@@ -221,6 +222,8 @@ export default function RandomNumbersApp() {
               fontSize: 20,
               fontWeight: "bold",
               transform: isRolling ? "scale(1.2)" : "scale(1)",
+              margin: 35,
+              // opacity: "0.5",
             }}
           >
             {num}
@@ -237,6 +240,7 @@ export default function RandomNumbersApp() {
           backgroundColor: "transparent",
           border: "none",
           cursor: "pointer",
+          fontFamily: "fantasy",
         }}
         onClick={() => setShowSettings(true)}
       >
