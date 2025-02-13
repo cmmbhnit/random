@@ -118,11 +118,16 @@ export default function RandomNumbersApp() {
         </h2>
         <div
           style={{
-            position: "fixed",
-            top: "1rem",
-            left: "1rem",
+            position: "absolute", // Center it using absolute positioning
+            top: "30%", // Vertically centered
+            left: "50%", // Horizontally centered
+            transform: "translate(-50%, -50%)", // Adjust for element size
             display: "flex",
-            gap: "10px",
+            gap: "16px", // Space between inputs
+            padding: "16px", // Padding around the input container
+            backgroundColor: "#f3f4f6", // Light gray background for contrast
+            borderRadius: "12px", // Rounded corners for a modern look
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
           }}
         >
           <input
@@ -130,12 +135,34 @@ export default function RandomNumbersApp() {
             value={min}
             onChange={(e) => setMin(Number(e.target.value))}
             placeholder="Min"
+            style={{
+              padding: "12px 16px", // Add padding for a better click area
+              border: "1px solid #d1d5db", // Light border
+              borderRadius: "8px", // Rounded corners
+              fontSize: "1rem", // Modern font size
+              outline: "none", // Remove default focus outline
+              boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)", // Inner shadow for depth
+              transition: "border-color 0.3s ease", // Smooth transition for focus
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#2563eb")} // Highlight on focus
+            onBlur={(e) => (e.target.style.borderColor = "#d1d5db")} // Reset on blur
           />
           <input
             type="number"
             value={max}
             onChange={(e) => setMax(Number(e.target.value))}
             placeholder="Max"
+            style={{
+              padding: "12px 16px", // Add padding for a better click area
+              border: "1px solid #d1d5db", // Light border
+              borderRadius: "8px", // Rounded corners
+              fontSize: "1rem", // Modern font size
+              outline: "none", // Remove default focus outline
+              boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)", // Inner shadow for depth
+              transition: "border-color 0.3s ease", // Smooth transition for focus
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#2563eb")} // Highlight on focus
+            onBlur={(e) => (e.target.style.borderColor = "#d1d5db")} // Reset on blur
           />
         </div>
 
