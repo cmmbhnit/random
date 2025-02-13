@@ -304,16 +304,16 @@ export default function RandomNumbersApp() {
             style={{
               fontFamily: "fantasy",
               backgroundColor: "white",
-              width: 80,
-              height: 80,
+              width: 150,
+              height: 150,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               borderRadius: 10,
               boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
-              fontSize: 20,
+              fontSize: 45,
               fontWeight: "bold",
-              margin: 35,
+              margin: 50,
             }}
           >
             {digit}
@@ -341,7 +341,7 @@ export default function RandomNumbersApp() {
       <button
         style={{
           position: "absolute", // Use absolute positioning
-          top: "60%", // Center vertically
+          top: "70%", // Center vertically
           left: "50%", // Center horizontally
           transform: "translate(-50%, -50%)", // Offset by half its width and height
           padding: "16px 24px",
