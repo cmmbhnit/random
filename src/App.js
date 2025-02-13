@@ -345,7 +345,7 @@ export default function RandomNumbersApp() {
           left: "50%", // Center horizontally
           transform: "translate(-50%, -50%)", // Offset by half its width and height
           padding: "16px 24px",
-          backgroundColor: "#FF0000",
+          backgroundColor: "rgb(225, 37, 78)",
           color: "white",
           borderRadius: "10px",
           cursor: isRolling ? "not-allowed" : "pointer",
@@ -356,7 +356,7 @@ export default function RandomNumbersApp() {
           gap: "8px",
           fontWeight: "bold",
           fontSize: "1rem",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
         }}
         onClick={startRolling}
         disabled={isRolling}
