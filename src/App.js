@@ -361,7 +361,7 @@ export default function RandomNumbersApp() {
         onClick={startRolling}
         disabled={isRolling}
       >
-        <RefreshCw size={20} /> {isRolling ? "Đang quay..." : "Random số"}
+        <RefreshCw size={50} /> {isRolling ? "Đang quay..." : "Random số"}
       </button>
 
 
