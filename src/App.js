@@ -12,6 +12,7 @@ export default function RandomNumbersApp() {
   const [videoBackground, setVideoBackground] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [explosions, setExplosions] = useState([]);
+  const [timeOutRandom, setTimeOutRandom] = useState(5000)
 
   function generateRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -41,7 +42,7 @@ export default function RandomNumbersApp() {
       setDigits(padDigits(finalNumber, max));
       setIsRolling(false);
       triggerExplosion();
-    }, 2000);
+    }, timeOutRandom);
   }
 
   function triggerExplosion() {
@@ -130,6 +131,25 @@ export default function RandomNumbersApp() {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
           }}
         >
+          <div style={{ alignContent: 'center' }}>Thời gian quay:</div>
+          <input
+            type="number"
+            value={timeOutRandom}
+            onChange={(e) => setTimeOutRandom(Number(e.target.value))}
+            placeholder="Timeout"
+            style={{
+              padding: "12px 16px", // Add padding for a better click area
+              border: "1px solid #d1d5db", // Light border
+              borderRadius: "8px", // Rounded corners
+              fontSize: "1rem", // Modern font size
+              outline: "none", // Remove default focus outline
+              boxShadow: "inset 0px 1px 3px rgba(0, 0, 0, 0.1)", // Inner shadow for depth
+              transition: "border-color 0.3s ease", // Smooth transition for focus
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#2563eb")} // Highlight on focus
+            onBlur={(e) => (e.target.style.borderColor = "#d1d5db")} // Reset on blur
+          />
+          <div style={{ alignContent: 'center' }}>Min:</div>
           <input
             type="number"
             value={min}
@@ -147,6 +167,8 @@ export default function RandomNumbersApp() {
             onFocus={(e) => (e.target.style.borderColor = "#2563eb")} // Highlight on focus
             onBlur={(e) => (e.target.style.borderColor = "#d1d5db")} // Reset on blur
           />
+          <div style={{ alignContent: 'center' }}>Max:</div>
+
           <input
             type="number"
             value={max}
