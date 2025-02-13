@@ -171,7 +171,7 @@ export default function RandomNumbersApp() {
             padding: "12px",
             backgroundColor: "#374151",
             color: "white",
-            borderRadius: "999px",
+            borderRadius: "10px",
             display: "flex",
             alignItems: "center",
             gap: "8px",
@@ -195,7 +195,7 @@ export default function RandomNumbersApp() {
             padding: "12px",
             backgroundColor: "#1d4ed8",
             color: "white",
-            borderRadius: "999px",
+            borderRadius: "10px",
             display: "flex",
             alignItems: "center",
             gap: "8px",
@@ -219,7 +219,7 @@ export default function RandomNumbersApp() {
             padding: "12px",
             backgroundColor: "#dc2626",
             color: "white",
-            borderRadius: "999px",
+            borderRadius: "10px",
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
           }}
           onClick={() => setShowSettings(false)}
