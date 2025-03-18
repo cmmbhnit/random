@@ -253,142 +253,153 @@ export default function RandomNumbersApp() {
   }
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {videoBackground && (
-        <video
-          src={videoBackground}
-          autoPlay
-          loop
-          muted
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: -1,
-          }}
-        />
-      )}
 
-      {background && !videoBackground && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundImage: `url(${background})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            zIndex: -1,
-          }}
-        />
-      )}
-      {explosions.map((explosion) => (
-        <motion.div
-          key={explosion.id}
-          initial={{ opacity: 1, x: explosion.x, y: explosion.y, scale: 0 }}
-          animate={{
-            opacity: 0,
-            x: explosion.x + Math.cos(explosion.angle) * 100,
-            y: explosion.y + Math.sin(explosion.angle) * 100,
-            scale: 1.5,
-          }}
-          transition={{ duration: 1, delay: explosion.delay }}
-          style={{
-            position: "absolute",
-            width: 8,
-            height: 8,
-            backgroundColor: explosion.color,
-            borderRadius: "50%",
-          }}
-        />
-      ))}
-
+    <div>
       <div
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", gap: "16px" }}
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
-        {digits.map((digit, index) => (
-          <motion.div
-            key={index}
-            animate={{ scale: isRolling ? 1.2 : 1 }}
-            transition={{ duration: 0.2 }}
+        {videoBackground && (
+          <video
+            src={videoBackground}
+            autoPlay
+            loop
+            muted
             style={{
-              fontFamily: "fantasy",
-              backgroundColor: "white",
-              width: 150,
-              height: 150,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 10,
-              boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
-              fontSize: 45,
-              fontWeight: "bold",
-              margin: 50,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: -1,
             }}
-          >
-            {digit}
-          </motion.div>
+          />
+        )}
+
+        {background && !videoBackground && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${background})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              zIndex: -1,
+            }}
+          />
+        )}
+        {explosions.map((explosion) => (
+          <motion.div
+            key={explosion.id}
+            initial={{ opacity: 1, x: explosion.x, y: explosion.y, scale: 0 }}
+            animate={{
+              opacity: 0,
+              x: explosion.x + Math.cos(explosion.angle) * 100,
+              y: explosion.y + Math.sin(explosion.angle) * 100,
+              scale: 1.5,
+            }}
+            transition={{ duration: 1, delay: explosion.delay }}
+            style={{
+              position: "absolute",
+              width: 8,
+              height: 8,
+              backgroundColor: explosion.color,
+              borderRadius: "50%",
+            }}
+          />
         ))}
+
+        <div
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", gap: "16px" }}
+        >
+          {digits.map((digit, index) => (
+            <motion.div
+              key={index}
+              animate={{ scale: isRolling ? 1.2 : 1 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                fontFamily: "fantasy",
+                backgroundColor: "white",
+                width: 150,
+                height: 150,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 10,
+                boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
+                fontSize: 45,
+                fontWeight: "bold",
+                margin: 50,
+              }}
+            >
+              {digit}
+            </motion.div>
+          ))}
+        </div>
+
+
+        <button
+          style={{
+            position: "fixed",
+            top: "1rem",
+            right: "1rem",
+            opacity: 0.5,
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontFamily: "fantasy",
+          }}
+          onClick={() => setShowSettings(true)}
+        >
+          <Settings size={20} /> Cài đặt
+        </button>
+
+        <button
+          style={{
+            position: "absolute", // Use absolute positioning
+            top: "70%", // Center vertically
+            left: "50%", // Center horizontally
+            transform: "translate(-50%, -50%)", // Offset by half its width and height
+            padding: "16px 24px",
+            backgroundColor: "rgb(225, 37, 78)",
+            color: "white",
+            borderRadius: "10px",
+            cursor: isRolling ? "not-allowed" : "pointer",
+            opacity: isRolling ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
+          }}
+          onClick={startRolling}
+          disabled={isRolling}
+        >
+          <RefreshCw size={50} /> {isRolling ? "Đang quay..." : "Random số"}
+        </button>
+
+
+
+
       </div>
-
-
-      <button
-        style={{
-          position: "fixed",
-          top: "1rem",
-          right: "1rem",
-          opacity: 0.5,
-          backgroundColor: "transparent",
-          border: "none",
-          cursor: "pointer",
-          fontFamily: "fantasy",
-        }}
-        onClick={() => setShowSettings(true)}
-      >
-        <Settings size={20} /> Cài đặt
-      </button>
-
-      <button
-        style={{
-          position: "absolute", // Use absolute positioning
-          top: "70%", // Center vertically
-          left: "50%", // Center horizontally
-          transform: "translate(-50%, -50%)", // Offset by half its width and height
-          padding: "16px 24px",
-          backgroundColor: "rgb(225, 37, 78)",
-          color: "white",
-          borderRadius: "10px",
-          cursor: isRolling ? "not-allowed" : "pointer",
-          opacity: isRolling ? 0.7 : 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px",
-          fontWeight: "bold",
-          fontSize: "1rem",
-          boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
-        }}
-        onClick={startRolling}
-        disabled={isRolling}
-      >
-        <RefreshCw size={50} /> {isRolling ? "Đang quay..." : "Random số"}
-      </button>
-
-
-
-
+      <script
+        src="https://app.preny.ai/embed-global.js"
+        data-button-style="width:200px;height:200px"
+        async
+        defer
+        data-preny-bot-id="67c8f3459998359a7fac9e67"
+      ></script>
     </div>
+
   );
 }
