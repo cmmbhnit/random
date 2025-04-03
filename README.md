@@ -1,3 +1,9 @@
+
+Deploy ghpage
+### `yarn add gh-pages --save-dev` 
+### `yarn run build`
+### `yarn run deploy`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -5,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
 
 ### `npm start`
 

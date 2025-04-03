@@ -392,13 +392,7 @@ export default function RandomNumbersApp() {
 
 
       </div>
-      <script
-        src="https://app.preny.ai/embed-global.js"
-        data-button-style="width:200px;height:200px"
-        async
-        defer
-        data-preny-bot-id="67c8f3459998359a7fac9e67"
-      ></script>
+
     </div>
 
   );
